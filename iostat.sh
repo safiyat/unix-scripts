@@ -3,13 +3,22 @@
 
 #
 #
-# read -n 1 -s
+# read -n 1 -s -t 0.1 var
 #
 #
 
 
 bold=$(tput bold)
 normal=$(tput sgr0)
+
+function waitForQ
+{
+        read -n 1 -s -t 0.1 key
+        if [[ $key == "q" ]]
+        then
+            break
+        fi
+}
 
 if [ "`which iostat`" == "" ]
 then
@@ -32,8 +41,6 @@ ifs=$IFS
 IFS='
 '
 
-count=0
-
 cur=0
 prev=1
 
@@ -41,21 +48,20 @@ printf "\033[s"
 
 while [ $cur != $prev ]
 do
+        waitForQ
 	prev="cur"
-        sleep 1
+
 	ios=`iostat -m`
 	printf "\033[u"
         printf "\033[J"
 	printf "\033[s"
-        date +%_H:%_M:%_S
+        echo -n ${bold}
+        date +%H:%M:%S
+        echo -n ${normal}
+
 	printf "$ios"
 
-
-#        key=""
-#        timeout 3s read -n1 -s key
-#        count=`echo $count + 1 | bc`
-#        echo "$count $key"
-
+        waitForQ
 
 	cur=""
 	for i in $ios

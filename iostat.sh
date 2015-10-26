@@ -1,13 +1,5 @@
 #!/usr/bin/env bash
 
-
-#
-#
-# read -n 1 -s -t 0.1 var
-#
-#
-
-
 bold=$(tput bold)
 normal=$(tput sgr0)
 
@@ -20,6 +12,7 @@ function waitForQ
         fi
 }
 
+
 if [ "`which iostat`" == "" ]
 then
     echo "${bold}sysstat${normal} not installed. Installing it..."
@@ -28,8 +21,8 @@ then
     #for ubuntu
         sudo apt-get -y install sysstat
     elif [ -f "/etc/redhat-release" ]
-    #for fedora
     then
+    #for fedora
         sudo yum -y install sysstat
     else
         echo "Suitable linux distro not found. Exiting..."

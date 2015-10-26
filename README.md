@@ -6,6 +6,7 @@
 `printf "\033[u"` - Restore the cursor position.  </br>
 `printf "\033[J"` - Clear from cursor to the end of the screen.  </br>
 
+#### Function for 'q' action.
 ``` bash
 function waitForQ
 {

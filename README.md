@@ -5,3 +5,14 @@
 	`printf "\033[s"` - Save the cursor position.
 	`printf "\033[u"` - Restore the cursor position.
         `printf "\033[J"` - Clear from cursor to the end of the screen.
+
+
+`function waitForQ
+{
+        read -n 1 -s -t 0.1 key
+        if [[ $key == "q" ]]
+        then
+            break
+        fi
+}`
+

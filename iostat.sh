@@ -3,16 +3,17 @@
 bold=$(tput bold)
 normal=$(tput sgr0)
 
+# Provide the `q` action like in less.
 function waitForQ
 {
-        read -n 1 -s -t 0.1 key
-        if [[ $key == "q" ]]
-        then
-            break
-        fi
+    read -n 1 -s -t 0.1 key   # read a single character, with timeout
+    if [[ $key == "q" ]]
+    then
+        break
+    fi
 }
 
-
+# If iostat is not available...
 if [ "`which iostat`" == "" ]
 then
     echo "${bold}sysstat${normal} not installed. Installing it..."
@@ -33,20 +34,15 @@ fi
 
 while [ true ]
 do
-        waitForQ
-
-	ios=`iostat -m`
-        echo -n ${bold}
-        date +%H:%M:%S
-        echo -n ${normal}
-        printf "\033[J"
-	printf "$ios"
-        lines=`printf "$ios" | wc -l`
-        lines=`echo $lines + 1 | bc`
-        printf "\033[s"
-        waitForQ
-        printf "\033["$lines"F"
-        # read -n 1
+    ios=`iostat -m`                 # Run the command.
+    echo -n ${bold}                 # Enable bold.
+    date +%H:%M:%S
+    echo -n ${normal}               # Disable bold.
+    printf "\033[J"                 # Clear till the end of screen.
+    printf "$ios"                   # Echo the whole output.
+    lines=`printf "$ios" | wc -l`   # Calculate the lines of output.
+    lines=`echo $lines + 1 | bc`    # Comensate for timestamp output.
+    waitForQ
+    printf "\033["$lines"F"         # Time to go back.
 done
-printf "\033[u"
 echo

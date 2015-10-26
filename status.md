@@ -10,29 +10,29 @@
 
 
 ### cpupower.sh <a id="cpupower"></a>
-#### Shows the processor power related values.
+Shows the processor power related values.
 **State:** Basic functionality to be explored further. Refinements required to the display.
 
 ### findAndCopy.sh <a id="findAndCopy"></a>
-#### No information.
+No information.
 **State:** No information.
 
 ### io.sh <a id="io"></a>
-#### Enhancement over iostat.sh. Intends to show the true file-operation status.
+Enhancement over iostat.sh. Intends to show the true file-operation status.
 **State:** No information.
 
 ### iostat.sh <a id="iostat"></a>
-#### Shows the status of all the I/O devices attached to the system.
+Shows the status of all the I/O devices attached to the system.
 **State:** Complete.
 
 ### lock.sh <a id="lock"></a>
-#### A health conscious irritant. Cares about your health.
+A health conscious irritant. Cares about your health.
 **State:** No information.
 
 ### script-crop.sh <a id="script-crop"></a>
-#### Crop the image files to a given size.
+Crop the image files to a given size.
 **State:** No information. Depends on python.
 
 ### script-resize.sh <a id="script-resize"></a>
-#### Resize the image files to a given size.
+Resize the image files to a given size.
 **State:** No information. Depends on python.

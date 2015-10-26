@@ -1,39 +1,14 @@
-# ifs=$IFS
-# IFS='
-# '
+printf "\033[s"            # Save the cursor position
 
-# cur=0
-# prev=1
-
-# printf "\033[s"
-
-# while [[ $cur != $prev ]]
-# do
-# 	prev="cur"
-# 	sleep 1
-# 	ios="cpupower monitor"
-# 	printf "\033[u"
-#       printf "\033[J"
-# 	printf "\033[s"
-# 	printf "`$ios`"
-# 	cur=""
-# 	for i in $ios
-# 	do
-# 	    IFS=' '
-# 	    cur="$cur $(echo $k | cut -d \  -f 6)"
-# 	    IFS='
-# '
-# 	done
-# done
-# echo
-# IFS=$ifs
-
-printf "\033[s"
+command="sudo cpupower monitor"
 
 while [ true ]
 do
-    sudo cpupower monitor
-    printf "\033[u"
+    printf "\033[s"        # Save the cursor position
+    # sudo cpupower monitor
+    op=`command`
+    # echo -e "TEST\n$op"
+    printf "\033[u"        # Restore the cursor position
     printf "\033[J"
     printf "\033[s"
 

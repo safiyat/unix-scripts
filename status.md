@@ -11,7 +11,7 @@
 
 ### cpupower.sh <a id="cpupower"></a>
 Shows the processor power related values.
-**State:** Basic functionality to be explored further. Refinements required to the display.
+**State:** Basic functionality to be explored further. Installer to be written. Refinements to the display complete.
 
 ### findAndCopy.sh <a id="findAndCopy"></a>
 No information.

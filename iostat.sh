@@ -24,7 +24,7 @@ then
     elif [ -f "/etc/redhat-release" ]
     then
     #for fedora
-        sudo yum -y install sysstat
+        sudo dnf -y install sysstat
     else
         echo "Suitable linux distro not found. Exiting..."
         exit

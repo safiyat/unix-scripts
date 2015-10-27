@@ -31,7 +31,7 @@ then
     fi
 fi
 
-
+stty -echo
 while [ true ]
 do
     ios=`iostat -m`                 # Run the command.
@@ -45,4 +45,5 @@ do
     waitForQ
     printf "\033["$lines"F"         # Time to go back.
 done
+stty echo
 echo

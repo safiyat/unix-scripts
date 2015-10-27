@@ -34,6 +34,7 @@ function waitForQ
 printf "\033[s"                     # Save the position of the cursor on the screen.
 sudo echo -n                        # Get temporary sudo rights.
 printf "\033[u"                     # Restore the position of the cursor on the screen.
+stty -echo
 cpm=`sudo cpupower monitor`         # Run the command.
 while [ true ]
 do
@@ -50,4 +51,5 @@ do
     printf "\033["$lines"F"         # Time to go back.
 done
 printf "\033[u"                     # Restore the position of the cursor on the screen.
+stty echo
 echo

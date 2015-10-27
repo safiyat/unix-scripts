@@ -17,3 +17,12 @@ function waitForQ
         fi
 }
 ```
+
+#### Turn off echo
+``` bash
+stty -echo
+```
+Turn it back on
+``` bash
+stty echo
+```

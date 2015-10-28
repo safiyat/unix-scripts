@@ -14,7 +14,7 @@ function waitForQ
 }
 
 # If iostat is not available...
-if [ "`which iostat`" == "" ]
+if [ "`command -v iostat`" == "" ]
 then
     echo "${bold}sysstat${normal} not installed. Installing it..."
     if [ -f "/etc/debian_version" ]

@@ -13,38 +13,50 @@
 #  Cinnamon:cinnamon-screensaver-command -l
 #
 
+
+#
+#
+# xinput float <id>
+# xinput reattach <id> <master>
+#
+#
+
 bold=$(tput bold)
 normal=$(tput sgr0)
 
-function getDE()
-{
-    if [ "$XDG_CURRENT_DESKTOP" = "" ]
-    then
-        desktop=$(echo "$XDG_DATA_DIRS" | sed 's/.*\(xfce\|kde\|gnome\).*/\1/')
-    else
-        desktop=$XDG_CURRENT_DESKTOP
-    fi
-    desktop=${desktop,,}  # convert to lower case
-    eval "$1=\"$desktop\""
-}
+# GNOME. Mostly Ubuntu.
+if [ -n "`command -v gnome-screensaver-command`" ]
+then
+    lock="gnome-screensaver-command -l"
+# KDE
+elif [ -n "`command -v dm-tool`" ]
+then
+    lock="dm-tool lock"
+# Cinnamon
+elif [ -n "`command -v cinnamon-screensaver-command`" ]
+then
+    lock="cinnamon-screensaver-command -l"
+# UGLY. For Fedora GNOME.
+elif [ -n "`command -v dnf`" ]
+then
+    lock="dbus-send --type=method_call --dest=org.gnome.ScreenSaver /org/gnome/ScreenSaver org.gnome.ScreenSaver.Lock"
+fi
 
-function getLockCommand()
-{
-    getDE deskenv
-    case $deskenv in
-        kde)
-            command="dm-tool lock"
-            ;;
-        unity)
-            command="gnome-screensaver-command -l"
-            ;;
-        gnome)
-            command="gnome-screensaver-command -l"
-            ;;
-    esac
-    eval "$1=\"$command\""
-}
+WORK=5     # In seconds.
+REST=5      # In seconds.
 
+# for i in `seq $WORK`
+# do
+#     echo -n "$i."
+#     sleep 1
+# done
+# echo "!"
+# xinput float 11
 
-getLockCommand command
-echo "$command"
+# for i in `seq $REST`
+# do
+#     echo -n "$i!"
+#     sleep 1
+# done
+# echo "."
+# xinput reattach 11 3

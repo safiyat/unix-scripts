@@ -34,14 +34,14 @@ fi
 stty -echo
 while [ true ]
 do
-    ios=`iostat -m`                 # Run the command.
+    ios=$(iostat -md)               # Run the command.
+    text=$(printf "$ios" | tail -n+3)
     echo -n ${bold}                 # Enable bold.
     date +%H:%M:%S
     echo -n ${normal}               # Disable bold.
     printf "\033[J"                 # Clear till the end of screen.
-    printf "$ios"                   # Echo the whole output.
-    lines=`printf "$ios" | wc -l`   # Calculate the lines of output.
-    lines=`echo $lines + 1 | bc`    # Comensate for timestamp output.
+    printf "$text"                  # Echo the whole output.
+    lines=$(expr `printf "$text" | wc -l` + 1) # Calculate the lines of output.
     waitForQ
     printf "\033["$lines"F"         # Time to go back.
 done

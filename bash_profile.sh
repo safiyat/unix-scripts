@@ -120,3 +120,10 @@ fi
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 . /etc/bash_completion
 fi
+
+alias tailf="tail -f"
+
+
+if [ -f ~/.bash_profile_mac ]; then
+    . ~/.bash_profile_mac
+fi

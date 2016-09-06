@@ -85,7 +85,8 @@ xterm*|rxvt*)
 esac
 
 # enable color support of ls and also add handy aliases
-if [[ -n $(dircolors) ]]; then
+which dircolors
+if [ $? -eq 0 ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
 fi
 alias ls='ls --color=auto'

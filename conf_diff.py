@@ -3,13 +3,15 @@
 import ConfigParser
 import json
 import os
-from prettytable import PrettyTable
+from texttable import Texttable
+import subprocess
 import sys
 
 
 def main():
   files = list()
   configs = list()
+  defaults = list()
   filenames = sys.argv[1:]
 
   # Read config
@@ -19,9 +21,11 @@ def main():
       return 1
     config = ConfigParser.ConfigParser()
     config.read(filename)
+    default = dict(config.defaults())
 
     files.append(filename)
     configs.append(config)
+    defaults.append(default)
 
   # Gather sections
   sections = set()
@@ -31,10 +35,32 @@ def main():
   sections = sorted(sections)
 
   # Create table
-  t = PrettyTable(['Name'] + files)
+  rows, columns = subprocess.check_output(['stty', 'size']).split()
+  t = Texttable(max_width=int(columns))
+  t.header(['Name'] + files)
+
+  # Handling default section
+  section = 'DEFAULT'
+  t.add_row(['['+section+']'] + [''] * len(files))
+  options = set()
+  for config in configs:
+    options.update(config.defaults().keys())
+
+  options = sorted(options)
+  for option in options:
+    values = [option]
+    for config in configs:
+      if config.has_option(section, option):
+        value = config.get(section, option)
+        values.append(value)
+      else:
+        values.append('')
+    t.add_row(values)
+  t.add_row([''] + [''] * len(files))
+
 
   for section in sections:
-    t.add_row(['['+section+']'] + ['========'] * len(files))
+    t.add_row(['['+section+']'] + [''] * len(files))
     options = set()
     for config in configs:
       if config.has_section(section) is False:
@@ -44,15 +70,21 @@ def main():
     options = sorted(options)
     for option in options:
       values = [option]
-      for config in configs:
+      for config, default in zip(configs, defaults):
         if config.has_option(section, option):
-          values.append(config.get(section, option))
+          value = config.get(section, option)
+          if option in default and default[option] == value:
+            values.append('')
+            continue
+          values.append(value)
         else:
           values.append('')
+      if values[1:] == [''] * (len(values) - 1):
+        continue
       t.add_row(values)
-    t.add_row(['========'] + ['========'] * len(files))
+    t.add_row([''] + [''] * len(files))
 
-  print t.get_string(left_padding_width=1)
+  print t.draw()
   return 0
 
 

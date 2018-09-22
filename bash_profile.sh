@@ -1,9 +1,10 @@
 export EDITOR="emacs"
 export LC_ALL=C
 
-alias psg="ps aux | grep -v grep | grep -i -e VSZ -e"
-alias aria="aria2c --quiet=true &"
+alias psg="ps aux | grep -v grep | grep --color=never -i -e VSZ -e"
 
+alias aria="aria2c --quiet=true &"
+alias aria-web="cd ${HOME}/.aria2/web-ui/ && node node-server.js &"
 
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
@@ -14,7 +15,7 @@ alias aria="aria2c --quiet=true &"
 
 # don't put duplicate lines in the history. See bash(1) for more options
 # ... or force ignoredups and ignorespace
-HISTCONTROL=ignoredups:ignorespace
+HISTCONTROL=ignoredups:erasedups
 
 # append to the history file, don't overwrite it
 shopt -s histappend
@@ -43,7 +44,7 @@ esac
 # uncomment for a colored prompt, if the terminal has the capability; turned
 # off by default to not distract the user: the focus in a terminal window
 # should be on the output of commands, not on the prompt
-#force_color_prompt=yes
+force_color_prompt=yes
 
 if [ -n "$force_color_prompt" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
@@ -57,9 +58,9 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    PS1='$(date +%d\ %H:%M:%S) ${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+    PS1='$(date +%d\ %H:%M:%S) ${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
 unset color_prompt force_color_prompt
 
@@ -73,7 +74,7 @@ xterm*|rxvt*)
 esac
 
 # enable color support of ls and also add handy aliases
-which dircolors
+which dircolors > /dev/null
 if [ $? -eq 0 ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
 fi

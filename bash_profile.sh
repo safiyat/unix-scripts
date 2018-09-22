@@ -1,20 +1,8 @@
 export EDITOR="emacs"
-
-test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
-
 export LC_ALL=C
 
-if [ -f $(brew --prefix)/etc/bash_completion ]; then
-    . $(brew --prefix)/etc/bash_completion
-fi
-
-# alias ll="ls -lhA"
-
 alias psg="ps aux | grep -v grep | grep -i -e VSZ -e"
-
 alias aria="aria2c --quiet=true &"
-
-
 
 
 # ~/.bashrc: executed by bash(1) for non-login shells.

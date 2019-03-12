@@ -1,11 +1,6 @@
 export EDITOR="emacs"
 export LC_ALL=C
 
-alias psg="ps aux | grep -v grep | grep --color=never -i -e VSZ -e"
-
-alias aria="aria2c --quiet=true &"
-alias aria-web="cd ${HOME}/.aria2/web-ui/ && node node-server.js &"
-
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
@@ -15,6 +10,7 @@ alias aria-web="cd ${HOME}/.aria2/web-ui/ && node node-server.js &"
 
 # don't put duplicate lines in the history. See bash(1) for more options
 # ... or force ignoredups and ignorespace
+
 HISTCONTROL=ignoredups:erasedups
 
 # append to the history file, don't overwrite it
@@ -79,8 +75,8 @@ if [ $? -eq 0 ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
 fi
 alias ls='ls --color=auto'
-#alias dir='dir --color=auto'
-#alias vdir='vdir --color=auto'
+alias dir='dir --color=auto'
+alias vdir='vdir --color=auto'
 
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
@@ -119,3 +115,56 @@ if [ $(uname) == "Darwin" ]; then
         . ~/.bash_profile_mac
     fi
 fi
+
+alias check_ssh="echo \"echo Hello World; exit\" | ssh -i ~/touchstone_key"
+
+# Python virtualenv management aliases
+alias s="source venv/bin/activate"
+alias d="deactivate"
+alias v="virtualenv venv"
+
+export PATH="/usr/local/sbin:$PATH"
+
+export PATH="/usr/local/opt/ncurses/bin:$PATH"
+export PATH="/usr/local/opt/sqlite/bin:$PATH"
+export PATH="/usr/local/opt/sphinx-doc/bin:$PATH"
+export PATH=$PATH:/usr/local/opt/go/libexec/bin
+# export PATH="/usr/local/opt/icu4c/bin:$PATH"
+export PATH="/usr/local/opt/imagemagick@6/bin:$PATH"
+
+alias emacs="/Users/safiyat/.emacs.d/emacs.sh"
+export GPG_TTY=$(tty)
+export PATH="/usr/local/opt/icu4c/bin:$PATH"
+export PATH="/usr/local/opt/icu4c/sbin:$PATH"
+export PKG_CONFIG_PATH="/usr/local/opt/icu4c/lib/pkgconfig"
+
+export BYOBU_PREFIX=/usr/local
+
+# Vim pager tool
+function vmore(){
+    if [[ -e ~/.vimrc.more ]]; then
+        vim -u ~/.vimrc.more - $@
+    else
+        echo "No .vimrc.more found in the HOME directory." > /dev/stderr
+    fi
+}
+
+# git aliases
+alias ga="git add"
+alias gc="git commit"
+alias gd="git diff"
+alias gr="git reset"
+alias gs="git status"
+
+# PID / Process name based search
+alias psg="ps aux | grep -v grep | grep --color=never -i -e VSZ -e"
+
+# Aria aliases
+alias aria="aria2c --quiet=true &"
+function aria-web(){
+    if [[ -e ${HOME}/.aria2/web-ui/node-server.js ]]; then
+        cd ${HOME}/.aria2/web-ui/ && node node-server.js &
+    else
+        echo "No node-server.js found in ${HOME}/.aria2/web-ui/" > /dev/stderr
+    fi
+}
